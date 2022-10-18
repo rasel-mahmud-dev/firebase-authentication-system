@@ -17,6 +17,7 @@ import {
   signInWithEmailAndPassword,
   sendEmailVerification,
   getAuth,
+  GithubAuthProvider,
   signInWithPopup,
 } from "firebase/auth";
 
@@ -85,6 +86,26 @@ const LoginPage = ({ dispatch }) => {
     const googleProvider = new GoogleAuthProvider();
     try {
       const { user } = await signInWithPopup(auth, googleProvider);
+      dispatch({
+        type: "LOGIN",
+        payload: {
+          displayName: user.displayName,
+          email: user.email,
+          userId: user.uid,
+          photoURL: user.photoURL,
+        },
+      });
+    } catch (ex) {
+      setErrorMessage(ex.message);
+    }
+  }
+
+  async function loginWithFacebook() {}
+
+  async function loginWithGithub() {
+    const githubProvider = new GithubAuthProvider();
+    try {
+      const { user } = await signInWithPopup(auth, githubProvider);
       dispatch({
         type: "LOGIN",
         payload: {
@@ -185,10 +206,18 @@ const LoginPage = ({ dispatch }) => {
             <Button onClick={loginWithGoogle} variant="contained" color="error">
               Login with Google
             </Button>
-            <Button variant="contained" color="secondary">
+            <Button
+              variant="contained"
+              color="secondary"
+              onClick={loginWithFacebook}
+            >
               Login with Facebook
             </Button>
-            <Button variant="contained" color="primary">
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={loginWithGithub}
+            >
               Login with Github
             </Button>
           </Box>

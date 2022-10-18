@@ -1,5 +1,4 @@
-## Firebase Test Project
-
+# Firebase Authentication Project
 
 ## Tools
 - Reactjs
@@ -25,6 +24,66 @@ import from firebase/auth.
 - if successfully sign in return user information that is an object.
 - if you want to redirect login then use signInWithRedirect.
 
+Example code
+```js
+
+import { GoogleAuthProvider, getAuth } from "firebase/auth";
+const auth = getAuth();
+
+async function loginWithGoogle() {
+    const googleProvider = new GoogleAuthProvider();
+    try {
+      const { user } = await signInWithPopup(auth, googleProvider);
+      dispatch({
+        type: "LOGIN",
+        payload: {
+          displayName: user.displayName,
+          email: user.email,
+          userId: user.uid,
+          photoURL: user.photoURL,
+        },
+      });
+    } catch (ex) {
+      setErrorMessage(ex.message);
+    }
+  }
+
+```
+
+
+## Step Guide for GitHub Login
+
+For more description go to https://firebase.google.com/docs/auth/web/github-auth
+- enable GitHub login provider for go to project dashboard  => Authentication
+- collect github Client ID  and Client secrets from GitHub developer page
+  => sign-in-method and add new GitHub auth provider put this credentials
+- import GithubAuthProvider from firebase/auth and create instance object
+
+Example code
+```js
+
+import { GithubAuthProvider, getAuth } from "firebase/auth";
+const auth = getAuth();
+
+async function loginWithGoogle() {
+    const githubProvider = new GithubAuthProvider();
+    try {
+      const { user } = await signInWithPopup(auth, githubProvider);
+      dispatch({
+        type: "LOGIN",
+        payload: {
+          displayName: user.displayName,
+          email: user.email,
+          userId: user.uid,
+          photoURL: user.photoURL,
+        },
+      });
+    } catch (ex) {
+      setErrorMessage(ex.message);
+    }
+  }
+```
+
 ## Step Guide for Email Password Login
 
 For more description go to https://firebase.google.com/docs/auth/web/password-auth.
@@ -35,6 +94,34 @@ For more description go to https://firebase.google.com/docs/auth/web/password-au
 - call createUserWithEmailAndPassword function with three args like auth, email, password
 - if successfully sign in return user information that is an object.
 - For sign in to call signInWithEmailAndPassword method and password there auth, email, password
+
+Example code
+```js
+import { signInWithEmailAndPassword, getAuth } from "firebase/auth";
+const auth = getAuth();
+
+async function loginWithPassword() {
+	const result = await signInWithEmailAndPassword(
+		auth,
+		userData.email,
+		userData.password
+	);
+	if (!result.user.emailVerified) {
+		// email varificaton mail send
+		return sendEmailVerification(auth.currentUser)
+			.then(() => {
+				setErrorMessage(
+					"Please Verify your email address, we just send mail to your mail, check it."
+				);
+			})
+			.catch((ex) => {
+				setErrorMessage("Please Verify your email address");
+			});
+	} else {
+		// verifiyed email login sucess 
+    }
+  }
+```
 
 ## For logout 
 -  import signOut from firebase/auth
