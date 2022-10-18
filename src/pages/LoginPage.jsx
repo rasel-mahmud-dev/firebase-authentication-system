@@ -87,15 +87,16 @@ const LoginPage = ({ dispatch }) => {
     const googleProvider = new GoogleAuthProvider();
     try {
       const { user } = await signInWithPopup(auth, googleProvider);
-      dispatch({
-        type: "LOGIN",
-        payload: {
-          displayName: user.displayName,
-          email: user.email,
-          userId: user.uid,
-          photoURL: user.photoURL,
-        },
-      });
+      // auth change observe in app js
+      // dispatch({
+      //   type: "LOGIN",
+      //   payload: {
+      //     displayName: user.displayName,
+      //     email: user.email,
+      //     userId: user.uid,
+      //     photoURL: user.photoURL,
+      //   },
+      // });
     } catch (ex) {
       setErrorMessage(ex.message);
     }
@@ -105,15 +106,16 @@ const LoginPage = ({ dispatch }) => {
     const facebookProvider = new FacebookAuthProvider();
     try {
       const { user } = await signInWithPopup(auth, facebookProvider);
-      dispatch({
-        type: "LOGIN",
-        payload: {
-          displayName: user.displayName,
-          email: user.email,
-          userId: user.uid,
-          photoURL: user.photoURL,
-        },
-      });
+      // auth change observe in app js
+      // dispatch({
+      //   type: "LOGIN",
+      //   payload: {
+      //     displayName: user.displayName,
+      //     email: user.email,
+      //     userId: user.uid,
+      //     photoURL: user.photoURL,
+      //   },
+      // });
     } catch (ex) {
       setErrorMessage(ex.message);
     }
@@ -123,15 +125,16 @@ const LoginPage = ({ dispatch }) => {
     const githubProvider = new GithubAuthProvider();
     try {
       const { user } = await signInWithPopup(auth, githubProvider);
-      dispatch({
-        type: "LOGIN",
-        payload: {
-          displayName: user.displayName,
-          email: user.email,
-          userId: user.uid,
-          photoURL: user.photoURL,
-        },
-      });
+      // auth change observe in app js
+      // dispatch({
+      //   type: "LOGIN",
+      //   payload: {
+      //     displayName: user.displayName,
+      //     email: user.email,
+      //     userId: user.uid,
+      //     photoURL: user.photoURL,
+      //   },
+      // });
     } catch (ex) {
       setErrorMessage(ex.message);
     }

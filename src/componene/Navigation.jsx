@@ -14,8 +14,9 @@ import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
 import { Link } from "react-router-dom";
 
+import { signOut, getAuth } from "firebase/auth";
+
 const pages = ["Products", "Pricing", "Blog"];
-const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
 const Navigation = ({ auth }) => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -35,6 +36,16 @@ const Navigation = ({ auth }) => {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
+
+  async function handleLogout() {
+    try {
+      const auth = getAuth();
+      await signOut(auth);
+      console.log("logout sucess");
+    } catch (ex) {
+      console.log(ex);
+    }
+  }
 
   return (
     <AppBar position="static">
@@ -151,11 +162,13 @@ const Navigation = ({ auth }) => {
                 open={Boolean(anchorElUser)}
                 onClose={handleCloseUserMenu}
               >
-                {settings.map((setting) => (
-                  <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                    <Typography textAlign="center">{setting}</Typography>
-                  </MenuItem>
-                ))}
+                <MenuItem onClick={handleCloseUserMenu}>
+                  <Typography textAlign="center">
+                    <Button variant="contained" onClick={handleLogout}>
+                      Logout
+                    </Button>
+                  </Typography>
+                </MenuItem>
               </Menu>
             </Box>
           ) : (
