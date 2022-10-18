@@ -84,6 +84,38 @@ async function loginWithGoogle() {
   }
 ```
 
+## Step Guide for Facebook Login
+
+For more description go to https://firebase.google.com/docs/auth/web/facebook-login
+- collect facebook Client ID and Client secrets from Facebook developer page https://developers.facebook.com
+- enable Facebook login provider for go to project dashboard  => Authentication => sign-in-method and add new GitHub auth provider put this credentials
+- import FacebookAuthProvider from firebase/auth and create instance object
+
+Example code
+```js
+
+import { FacebookAuthProvider, getAuth } from "firebase/auth";
+const auth = getAuth();
+
+async function loginWithFacebook() {
+	const facebookProvider = new FacebookAuthProvider();
+	try {
+		const { user } = await signInWithPopup(auth, facebookProvider);
+		dispatch({
+			type: "LOGIN",
+			payload: {
+				displayName: user.displayName,
+				email: user.email,
+				userId: user.uid,
+				photoURL: user.photoURL,
+			},
+		});
+	} catch (ex) {
+		setErrorMessage(ex.message);
+	}
+}
+```
+
 ## Step Guide for Email Password Login
 
 For more description go to https://firebase.google.com/docs/auth/web/password-auth.

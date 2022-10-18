@@ -16,6 +16,7 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   sendEmailVerification,
+  FacebookAuthProvider,
   getAuth,
   GithubAuthProvider,
   signInWithPopup,
@@ -100,7 +101,23 @@ const LoginPage = ({ dispatch }) => {
     }
   }
 
-  async function loginWithFacebook() {}
+  async function loginWithFacebook() {
+    const facebookProvider = new FacebookAuthProvider();
+    try {
+      const { user } = await signInWithPopup(auth, facebookProvider);
+      dispatch({
+        type: "LOGIN",
+        payload: {
+          displayName: user.displayName,
+          email: user.email,
+          userId: user.uid,
+          photoURL: user.photoURL,
+        },
+      });
+    } catch (ex) {
+      setErrorMessage(ex.message);
+    }
+  }
 
   async function loginWithGithub() {
     const githubProvider = new GithubAuthProvider();
