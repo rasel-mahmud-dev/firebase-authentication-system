@@ -1,5 +1,12 @@
 # Firebase Authentication Project
 
+## Features
+- Google, Facebook, Github, Password login system
+- Firestore (Firebase NoSQL Database)
+- Firebase hosting
+
+## Live Preview https://hero-test-auth.web.app
+
 ## Tools
 - Reactjs
 - MaterialUI
@@ -196,4 +203,54 @@ onAuthStateChanged(auth, (user) => {
     // User is signed out
   }
 });
+```
+
+
+# Deploy On Firebase as static 
+- go to more details https://firebase.google.com/docs/hosting/quickstart
+- install the Firebase CLI tools 
+- Initialize your project
+- Deploy to your site command
+ 
+To install firebase cli
+```shell
+npm install -g firebase-tools
+```
+
+Login your firebase account from command line
+```shell
+firebase login
+```
+
+After login Initialize your project
+```shell
+firebase init hosting or firebase init hosting
+```
+if init then choose (*) Hosting: Configure files for Firebase Hosting and (optionally) set up GitHub Action deploys
+- create one if you want host new site
+- set public directory whatever you want
+
+if success, it will write your root directory firebase.json and .firebaserc directory
+**Now initialized firebase project**
+
+For Manually deploy or update site
+```shell
+firebase deploy
+```
+for history fallback react app use rewrites
+
+```json
+// firebase.json 
+{
+  "hosting": {
+    "public": "dist",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites":[{"source":"**","destination":"/index.html"}]
+  }
+}
+
 ```
